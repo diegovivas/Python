@@ -1,0 +1,122 @@
+#!/usr/bin/python3
+import csv
+
+
+class Contact:
+
+    def __init__(self, name, phone, email):
+        self.name = name
+        self.phone = phone
+        self.email = email
+
+
+class ContactBook:
+
+    def __init__(self):
+        self._contacts = []
+
+    def add(self, name, phone, email):
+        contact = Contact(name, phone, email)
+        self._contacts.append(contact)
+        self._save()
+
+    def show_all(self):
+        for contact in self._contacts:
+            self._print_contact(contact)
+
+    def delete(self, name):
+        for idx, contact in enumerate(self._contacts):
+            if contact.name.lower() == name.lower():
+                del self._contacts[idx]
+                self._save()
+                break
+
+    def update(self, name):
+        for idx, contact in enumerate(self._contacts):
+            if contact.name.lower() == name.lower():
+                new = str(input('Nuevo nombre: '))
+                phone = str(input('Nuevo tel: '))
+                email = str(input('Nuevo email: '))
+                contact2 = Contact(new, phone, email)
+                self._contacts[idx] = contact2
+                self._save()
+                
+                
+    def search(self, name):
+        for contact in self._contacts:
+            if contact.name.lower() == name.lower():
+                self._print_contact(contact)
+                break
+        else:
+            print('><><><><><><')
+            print('{} No esta en la lista'. format(name))
+            print('><><><><><><')
+
+    def _print_contact(self, contact):
+        print('--><---><----><-----><----><---><--')
+        print('Nombre: {}'.format(contact.name))
+        print('Tel: {}'.format(contact.phone))
+        print('Email: {}'.format(contact.email))
+        print('--><---><----><-----><----><---><--')
+
+    def _save(self):
+        with open('contacts.csv', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow( ('name', 'phone', 'email') )
+            for contact in self._contacts:
+                writer.writerow( (contact.name, contact.phone, contact.email) )
+
+def run():
+
+    contact_book = ContactBook()
+
+    with open('contacts.csv', 'r') as f:
+        reader = csv.reader(f)
+        for idx, row in enumerate(reader):
+            if idx == 0:
+                continue
+            contact_book.add(row[0], row[1], row[2])
+            
+    while True:
+        command = str(input('''
+            Que deseas hacer?
+
+            [a]niadir contacto
+            [ac]tualizar contacto
+            [b]uscar contacto
+            [e]liminar contacto
+            [l]istar contactos
+            [s]alir
+        '''))
+
+        if command == 'a':
+            name = str(input('Escribe el nombre del contacto: '))
+            phone = str(input('Escribe el tel del contacto: '))
+            email = str(input('Escribe el email del contacto: '))
+
+            contact_book.add(name, phone, email)
+            
+        elif command == 'ac':
+            name = str(input('Actualizar contacto: '))
+            contact_book.update(name)
+            
+        elif command == 'b':
+            name = str(input('Buscar contacto: '))
+            contact_book.search(name)
+
+        elif command == 'e':
+            name = str(input('Eliminar contacto: '))
+            contact_book.delete(name)
+            
+        elif command == 'l':
+            contact_book.show_all()
+
+        elif command == 's':
+            break
+
+        else:
+            print('comando no encontrado')
+
+if __name__ == '__main__':
+    run()
+                
