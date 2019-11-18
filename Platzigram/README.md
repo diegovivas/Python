@@ -1,4 +1,4 @@
-Proyecto de Platzigram
+##Proyecto Platzigram
 
 clon basico de instagram utilizando python con el framework Django
 
@@ -25,6 +25,22 @@ Algunos conceptos:
 	-Entorno Virtual: es una funcion que permite crear entornos de
 		 	  desarrollo con la capacidad de instalar frameworks
 			  sin alterar el area de trabajo general.
+
+	-Templates: Archivos HTML que permiten la inclusion y ejecucuion de
+		    logica especial para la presentacion de datos.
+		    
+	-Modelo: Parte de un proyecto de Django que se encarga de estructurar
+		 las tablas y propiedades de la base de datos a traves de
+		 clases de Python.
+		 
+	-Vista: Parte de un proyecto de Django que se encarga de la logica
+		de negocio y es la conexion entre el ttemplate y el modelo.
+		
+	-App: Conjunto de codigo que se encarga de resolver una parte muy
+	      especifica del proyecto, contiene sus modelos, vistas, urls, etc.
+	      
+	-Patron de diseño: Solucion comun a un problema particular.
+
 
 Instalacion de python y un entorno virtual en linux:
 ## Correr:
@@ -57,4 +73,16 @@ Instalacion de python y un entorno virtual en linux:
    	1. Activar entorno virtual
 	2. Correr `pip install django -U`
 
-		    
+----------------------------------------------------------------------
+## Documentacion
+
+HttpRequest:
+
+	https://docs.djangoproject.com/en/2.2/topics/http/urls/
+
+-------------------------------------
+## Comandos a usar
+
+python3 manage.py runserver
+
+-------------------------------------
