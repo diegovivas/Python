@@ -25,14 +25,14 @@ class Estudiante:
 
     def __str__(self):
         string = str(self.__dict__["Documento"])
-        string = string + "\t\t|\t" + str(self.__dict__["Nombre1"])
+        string = string + "\t|\t" + str(self.__dict__["Nombre1"])
         string = string + " " + str(self.__dict__["Nombre2"])
         string = string + "\t|\t" + str(self.__dict__["Apellido1"])
         string = string + " " + str(self.__dict__["Apellido2"])
-        string = string + "\t\t|\t" + str(self.__dict__["Carrera"])
-        string = string + "\t\t|\t" + str(self.__dict__["Semestre"])
-        string = string + "\t\t|\t" + str(self.__dict__["Inasistencias"])
-        string = string + "\t\t|\t" + str(self.__dict__["Promedio"])
+        string = string + "\t|\t" + str(self.__dict__["Carrera"])
+        string = string + "\t|\t" + str(self.__dict__["Semestre"])
+        string = string + "\t|\t" + str(self.__dict__["Inasistencias"])
+        string = string + "\t|\t" + str(self.__dict__["Promedio"])
         return string
     
 class Sistema:
@@ -50,7 +50,7 @@ class Sistema:
 
     def imprimir(self, posicion):
         if self.carreras[posicion] in self.estudiantes_carrera:
-            print("Documento\t|\tNombres\t|\tApellidos\t|\tCarrera\t\t|\tSemestre\t|\tInasistencias\t|\tPromedio")
+            print("Documento|\tNombres\t|\tApellidos|\tCarrera|\tSemestre|\tInasistencias\t|\tPromedio")
             for element in sorted(self.estudiantes_carrera[self.carreras[posicion]], key = funcion_ordenar, reverse = True):
                 print(element)
             
@@ -91,8 +91,7 @@ class Sistema:
             with open(self.file2, "r") as f:
                 lista = json.load(f)
         except:
-            print("error")
-
+            pass
             
         for element in lista:
             for ele in element.values():
@@ -130,7 +129,7 @@ class Sistema:
         otro = []
         otro2 = []
         clavesf = {}
-        
+        self.estudiantesfinal = []
         try:
             with open(self.file1, "r") as f:
                 otro = json.load(f)
@@ -138,8 +137,8 @@ class Sistema:
                 otro2 = json.load(r)
 
         except:
-            print("hubo un error")
-
+            pass
+        
         for x in otro:
             for y in otro2:
                 if x.keys() == y.keys():
@@ -150,6 +149,7 @@ class Sistema:
         print("Documento\t|\tNombres\t|\tApellidos\t|\tCarrera\t\t|\tSemestre\t|\tInasistencias\t|\tPromedio")            
         for alumno in self.estudiantesfinal:
             print(alumno)
+        self.estudiantesfinal = []
             
     def agregar_datos_academicos(self, estudiante):
         final = {}
@@ -189,7 +189,7 @@ class Sistema:
       
             
     def agregar_estudiante(self):
-
+        sistema = Sistema()
         Documento = str(input('Ingrese Documento: '))
         Nombre1 = str(input('Ingrese Primer Nombre: '))
         Nombre2 = str(input('Ingrese Segundo Nombre: '))
@@ -206,6 +206,13 @@ class Sistema:
         estudiante = Estudiante(Documento, Nombre1, Nombre2, Apellido1,
                                 Apellido2, Carrera, Nota1, Nota2, Nota3,
                                 Promedio, Inasistencias, Semestre)
+        sistema.agregar_funcion(estudiante)
+
+    def agregar_funcion(self, estudiante):
+        Carrera = estudiante.__dict__["Carrera"]
+        Documento = estudiante.__dict__["Documento"]
+        Inasistencias = estudiante.__dict__["Inasistencias"]
+        Promedio = estudiante.__dict__["Promedio"]
         if Carrera.lower() in self.carreras:
             self.estudiantes_carrera[Carrera.lower()].append(estudiante)
         if Documento in self.documentos:
@@ -230,6 +237,30 @@ class Sistema:
                 pass
             sistema = Sistema()
             sistema.agregar_datos_academicos(estudiante)
+
+    def iniciar(self):
+        otro = []
+        otro2 = []
+        clavesf = {}
+        sistema = Sistema()
+        try:
+            with open(self.file1, "r") as f:
+                otro = json.load(f)
+            with open(self.file2, "r") as r:
+                otro2 = json.load(r)
+
+        except:
+            pass
+        
+        for x in otro:
+            for y in otro2:
+                if x.keys() == y.keys():
+                    clave = list(x.keys())[0]
+                    clavesf = {**x[clave], **y[clave]}
+                    estudiante = Estudiante(**clavesf)
+                    sistema.agregar_funcion(estudiante)
+        
+
 
 def funcion_ordenar(x):
     promedio = x.__dict__["Promedio"]
@@ -260,6 +291,7 @@ def funcion_agregar(estudiante):
 
 def run():
     sistema = Sistema()
+    sistema.iniciar()
     while True:
         comando = str(input('''
         **** Sistema registro Estudiantes Ing ****
