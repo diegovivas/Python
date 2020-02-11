@@ -18,7 +18,7 @@ Algunos conceptos:
 		    herramienta que al iniciar un proyecto ya tiene todo lo
 		    basico listo para ser aplicado.
 		    
-	-ORM: Es un modelo deprogramacion que consiste en la trasnformacion
+	-ORM: Es un modelo de programacion que consiste en la trasnformacion
 	      de las tablas en una base de datos, en una serie de entidades que
 	      simplifiquen el acceso a los datos.
 	      
@@ -83,6 +83,10 @@ HttpRequest:
 -------------------------------------
 ## Comandos a usar
 
-python3 manage.py runserver
+crear app:
+      python3 manage.py startapp
+
+Correr servidor local:
+       python3 manage.py runserver
 
 -------------------------------------

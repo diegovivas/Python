@@ -1,5 +1,6 @@
 """Post viwes"""
 #django
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 #utilities
@@ -36,5 +37,6 @@ posts = [
 ]
 
 # Create your views here.
+@login_required
 def list_post(request):
-    return render(request, 'feed.html', {'posts':posts})
+    return render(request, 'posts/feed.html', {'posts':posts})
