@@ -17,3 +17,9 @@ news_sites:
       homepage_article_links: '#bloqueImagenes a'
       article_body: '.text-articulos div'
       article_title: '.articulos h2'
+  eltiempo:
+    url: https://eltiempo.com
+    queries:
+      homepage_article_links: '.title-container a'
+      article_body: '.contenido'
+      article_title: '.titulo'
